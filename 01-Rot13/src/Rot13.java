@@ -38,20 +38,20 @@ public class Rot13 {
 
     }
 
-    public static String xifraRot13 (String desxifrat) {
+    public static String xifraRot13 (String cadena) {
         String xifrat = "";
-        for (int i = 0; i < desxifrat.length(); i++) {
-                char c = desxifrat.charAt(i);
+        for (int i = 0; i < cadena.length(); i++) {
+                char c = cadena.charAt(i);
                 xifrat += caractersTransformar(c, 13);
         }
 
         return xifrat;
     }
 
-    public static String desxifraRot13 (String xifrat) {
+    public static String desxifraRot13 (String cadena) {
         String desxifrat = "";
-        for (int i = 0; i < xifrat.length(); i++) {
-                char c = xifrat.charAt(i);
+        for (int i = 0; i < cadena.length(); i++) {
+                char c = cadena.charAt(i);
                 desxifrat += caractersTransformar(c, -13);
         }
 

@@ -77,7 +77,6 @@ public class Monoalfabetic {
   public static String desxifraMonoAlfa(String cadena) {
         String original = "";
 
-        // NOTA: No llamamos a permutaAlfabet aquí, usamos la clave global existente
         for (int i = 0; i < cadena.length(); i++) {
             char c = cadena.charAt(i);
             char cMaj = Character.toUpperCase(c);
