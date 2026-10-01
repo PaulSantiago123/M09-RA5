@@ -7,7 +7,6 @@ public class RotX {
         'v', 'w', 'x', 'y', 'z', 
     };
 
- 
     public static char[] majuscules = {
         'A', 'Á', 'À', 'B', 'C', 'Ç', 'D', 'E', 'É', 'È', 'F', 'G', 'H', 'I', 'Í', 'Ì', 'Ï', 
         'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'Ó', 'Ò', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ù', 'Ü', 
@@ -64,10 +63,7 @@ public class RotX {
         return desxifrat;
     }
 
-    
-
     public static void main (String [] args) {
-
         System.out.println("Xifrat");
         System.out.println("-------");
         System.out.println("(0)-ABC                   => " + xifraRotX("ABC", 0));
@@ -89,6 +85,5 @@ public class RotX {
         System.out.println("Missatge xifrat");
         System.out.println("--------------------");
         forcaBrutaRotX("Úiüht, úiü wx ùxì ív?");
-
     }
 }

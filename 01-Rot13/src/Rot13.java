@@ -7,7 +7,6 @@ public class Rot13 {
         'v', 'w', 'x', 'y', 'z', 
     };
 
-
     public static char[] majuscules = {
         'A', 'Á', 'À', 'B', 'C', 'Ç', 'D', 'E', 'É', 'È', 'F', 'G', 'H', 'I', 'Í', 'Ì', 'Ï', 
         'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'Ó', 'Ò', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ù', 'Ü', 
@@ -58,8 +57,6 @@ public class Rot13 {
         return desxifrat;
     }
 
-    
-
     public static void main (String [] args) {
         System.out.println("Xifrat");
         System.out.println("---------");
@@ -74,7 +71,5 @@ public class Rot13 {
         System.out.println("FGH => " + desxifraRot13("FGH"));
         System.out.println("Òwúí, Ùá. jiúkwb => " + desxifraRot13("Òwúí, Ùá. jiúkwb"));
         System.out.println("Zmálx, zmá bc acñ nà? => " + desxifraRot13("Zmálx, zmá bc acñ nà?"));
-    
-
     }
 }

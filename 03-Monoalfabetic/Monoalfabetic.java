@@ -106,7 +106,6 @@ public class Monoalfabetic {
     }
 
     public static void main(String[] args) {
-
         String t1 = "Test 01 àrbritre, coixí, Perímetre";
         String t2 = "Test 02 Taüll, DÍA, año";
         String t3 = "Test 03 Peça, Òrrius, Bòvila";
@@ -126,11 +125,8 @@ public class Monoalfabetic {
         System.out.println("Desxifratge:");
         System.out.println();
 
-    
         System.out.println(c1 + " -> " + desxifraMonoAlfa(c1));
         System.out.println(c2 + " -> " + desxifraMonoAlfa(c2));
         System.out.println(c3 + " -> " + desxifraMonoAlfa(c3));
-
-      
     }
 }
