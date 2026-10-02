@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Poliafabetic {
 
-    public static final int clauSecreta = 123;
+    private static final int clauSecreta = 123;
     public static Random random;
     public static void initRandom (int clau) { random = new Random(clau);}
 
