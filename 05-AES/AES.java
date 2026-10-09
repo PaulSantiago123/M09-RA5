@@ -1,7 +1,9 @@
-import javax.crypto.*;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
-import java.io.*;
+import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+
 
 
 public class AES {
@@ -17,38 +19,66 @@ public class AES {
     public static byte[] xifraAES(String msg, String clau) throws Exception {
     //Obtenir els bytes de l’String
 
-    byte [] msgBytes = msg.getBytes();
-
+    byte [] msgBytes = msg.getBytes(StandardCharsets.UTF_8);
+   
     // Genera IvParameterSpec
 
+    SecureRandom secureRandom = new SecureRandom();
+    secureRandom.nextBytes(iv);
     IvParameterSpec ivSpec = new IvParameterSpec(iv);
 
     // Genera hash
 
-    
+    MessageDigest md = MessageDigest.getInstance(ALGORISME_HASH);
+    byte[] hash = md.digest(clau.getBytes(StandardCharsets.UTF_8));
+    SecretKeySpec secretKeySpec = new SecretKeySpec(hash, ALGORISME_XIFRAT);
 
     // Encrypt.
 
+    Cipher cipher = Cipher.getInstance(FORMAT_AES);
+    cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivSpec);
+    byte[] cipherText = cipher.doFinal(msgBytes);
+
+
     // Combinar IV i part xifrada.
+
+    
+    byte[] encryptedData = new byte[iv.length + cipherText.length];
+    System.arraycopy(iv, 0, encryptedData, 0, iv.length);
+    System.arraycopy(cipherText, 0, encryptedData, iv.length, cipherText.length);
 
     // return iv+msgxifrat
 
-     
+     return encryptedData;
     }
-
 
     public static String desxifraAES(byte[] bIvIMsgXifrat, String clau) throws Exception {
-
-    // Extreure l'IV.
+     
+        // Extreure l'IV.
+    System.arraycopy(bIvIMsgXifrat, 0, iv, 0, MIDA_IV);
+    IvParameterSpec ivSpec = new IvParameterSpec(iv);
 
     // Extreure la part xifrada.
+    int midaMsgXifrat = bIvIMsgXifrat.length - MIDA_IV;
+    byte[] msgXifrat = new byte[midaMsgXifrat];
+    System.arraycopy(bIvIMsgXifrat, MIDA_IV, msgXifrat, 0, midaMsgXifrat);
 
     // Fer hash de la clau
+    MessageDigest md = MessageDigest.getInstance(ALGORISME_HASH);
+    byte[] hashClau = md.digest(clau.getBytes(StandardCharsets.UTF_8));
+    SecretKeySpec secretKeySpec = new SecretKeySpec(hashClau, ALGORISME_XIFRAT);
 
     // Desxifrar.
+    Cipher cipher = Cipher.getInstance(FORMAT_AES);
+    cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivSpec);
+    byte[] msgDesxifratBytes = cipher.doFinal(msgXifrat);
 
     // return String desxifrat
+    return new String(msgDesxifratBytes, StandardCharsets.UTF_8);
     }
+
+
+
 
     public static void main(String[] args) {
         String msgs[] = {"Lorem ipsum dicet",
