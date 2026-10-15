@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class XifradorMonoalfabetic {
+public class XifradorMonoalfabetic  implements Xifrador {
 
     public static final char[] majuscules = {
         'A', 'Á', 'À', 'B', 'C', 'Ç', 'D', 'E', 'É', 'È', 'F', 'G', 'H', 'I', 'Í', 'Ì', 'Ï', 
@@ -13,9 +13,32 @@ public class XifradorMonoalfabetic {
 
     public static char[] alfabetPermutat;
 
+
+    public XifradorMonoalfabetic() {
+        this.alfabetPermutat = permutaAlfabet(majuscules); 
+    }
+
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        if (clau != null) {
+            throw new ClauNoSuportada("Xifratxe monoalfabètic no suporta clau != null");
+        }
+        String resultat = xifraMonoAlfa(msg);
+        return new TextXifrat(resultat.getBytes());
+    }
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        if (clau != null) {
+            throw new ClauNoSuportada("Xifratxe monoalfabètic no suporta clau != null");
+        }
+        return desxifraMonoAlfa(xifrat.toString());
+    }
+
+
     public char[] permutaAlfabet(char [] alfabet) {
 
-        List<Character> abc = new ArrayList(alfabet.length);
+        List<Character> abc = new ArrayList<>(alfabet.length);
 
         for (char c : alfabet) {
             abc.add(c);
@@ -106,28 +129,4 @@ public class XifradorMonoalfabetic {
         return original;
     }
 
-    public void main(String[] args) {
-        String t1 = "Test 01 àrbritre, coixí, Perímetre";
-        String t2 = "Test 02 Taüll, DÍA, año";
-        String t3 = "Test 03 Peça, Òrrius, Bòvila";
-
-        System.out.println("Xifratge:");
-        System.out.println();
-    
-        String c1 = xifraMonoAlfa(t1);
-        String c2 = xifraMonoAlfa(t2);
-        String c3 = xifraMonoAlfa(t3);
-
-        System.out.println(t1 + " -> " + c1);
-        System.out.println(t2 + " -> " + c2);
-        System.out.println(t3 + " -> " + c3);
-
-        System.out.println();
-        System.out.println("Desxifratge:");
-        System.out.println();
-
-        System.out.println(c1 + " -> " + desxifraMonoAlfa(c1));
-        System.out.println(c2 + " -> " + desxifraMonoAlfa(c2));
-        System.out.println(c3 + " -> " + desxifraMonoAlfa(c3));
-    }
 }

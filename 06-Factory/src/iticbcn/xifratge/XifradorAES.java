@@ -8,7 +8,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 
 
-public class XifradorAES {
+public class XifradorAES  implements Xifrador {
 
     public static final String ALGORISME_XIFRAT = "AES";
     public static final String ALGORISME_HASH = "SHA-256";
@@ -17,6 +17,32 @@ public class XifradorAES {
     private static final int MIDA_IV = 16;
     private static final byte[] iv = new byte[MIDA_IV];
     private static final String CLAU = "Hola mon";
+
+
+    
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        try {
+            byte[] bytesXifrats = xifraAES(msg, clau);
+            return new TextXifrat(bytesXifrats);
+        } catch (Exception e) {
+            System.err.println("Error de xifrat: " + e.getLocalizedMessage());
+            System.exit(1);
+            return null;
+        }
+    }
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        try {
+            return desxifraAES(xifrat.getBytes(), clau);
+        } catch (Exception e) {
+            System.err.println("Error de desxifrat: " + e.getLocalizedMessage());
+            System.exit(1);
+            return null;
+        }
+    }
+
 
     public byte[] xifraAES(String msg, String clau) throws Exception {
     //Obtenir els bytes de l’String

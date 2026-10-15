@@ -5,17 +5,46 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class XifradorPoliafabetic {
+public class XifradorPoliafabetic implements Xifrador {
 
     private static final int clauSecreta = 123;
     public static Random random;
     public static void initRandom (int clau) { random = new Random(clau);}
+
 
     public static final char[] majuscules = {
         'A', 'Á', 'À', 'B', 'C', 'Ç', 'D', 'E', 'É', 'È', 'F', 'G', 'H', 'I', 'Í', 'Ì', 'Ï', 
         'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'Ó', 'Ò', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ù', 'Ü', 
         'V', 'W', 'X', 'Y', 'Z', 
     };
+
+
+    private long validaClau(String clau) throws ClauNoSuportada {
+        try {
+            return Long.parseLong(clau);
+        } catch (NumberFormatException e) {
+            throw new ClauNoSuportada("La clau per xifrat Polialfabètic ha de ser un String convertible a long");
+        }
+    }
+
+    private void initRandom(long clau) {
+        this.random = new Random(clau);
+    }
+
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        long clauLong = validaClau(clau);
+        initRandom(clauLong); 
+        String resultat = xifraPoliAlfa(msg);
+        return new TextXifrat(resultat.getBytes());
+    }
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        long clauLong = validaClau(clau);
+        initRandom(clauLong);
+        return desxifraPoliAlfa(xifrat.toString());
+    }
 
      public void permutaAlfabet() {
 

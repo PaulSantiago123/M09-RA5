@@ -1,6 +1,6 @@
 package iticbcn.xifratge;
 
-public class XifradorRotX {
+public class XifradorRotX implements Xifrador {
 
 
     public static char[] minuscules = {
@@ -14,6 +14,32 @@ public class XifradorRotX {
         'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'Ó', 'Ò', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'Ù', 'Ü', 
         'V', 'W', 'X', 'Y', 'Z', 
     };
+
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        int rotacio = parsejaClau(clau);
+        String resultat = xifraRotX(msg, rotacio);
+        return new TextXifrat(resultat.getBytes());
+    }
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        int rotacio = parsejaClau(clau);
+        return desxifraRotX(xifrat.toString(), rotacio);
+    }
+
+    private int parsejaClau(String clau) throws ClauNoSuportada {
+        try {
+            int rotacio = Integer.parseInt(clau);
+            if (rotacio < 0 || rotacio > 40) {
+                throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+            }
+        return rotacio;
+        } catch (NumberFormatException e) {
+            throw new ClauNoSuportada("Clau de RotX ha de ser un sencer de 0 a 40");
+        }
+    }
+
     public char caractersTransformar (char c, int numero) {
         for (int i = 0; i < minuscules.length; i++) {
             if (minuscules[i] == c) {
@@ -63,29 +89,5 @@ public class XifradorRotX {
         }
 
         return desxifrat;
-    }
-
-    public void main (String [] args) {
-        System.out.println("Xifrat");
-        System.out.println("-------");
-        System.out.println("(0)-ABC                   => " + xifraRotX("ABC", 0));
-        System.out.println("(2)-XYZ                   => " + xifraRotX("XYZ", 2));
-        System.out.println("(4)-Hola, Mr. calçot      => " + xifraRotX("Hola, Mr. calçot", 4));
-        System.out.println("(6)-Perdó, per tu què és? => " + xifraRotX("Perdó, per tu què és?", 6));
-    
-        System.out.println();
-    
-        System.out.println("Desxifrat");
-        System.out.println("---------");
-        System.out.println("(0) ABC                   => " + desxifraRotX("ABC", 0));
-        System.out.println("(2) ZAÁ                   => " + desxifraRotX("ZAÁ", 2));
-        System.out.println("(4) Ïqoc, Óú. écoèqü      => " + desxifraRotX("Ïqoc, Óú. écoèqü", 4));
-        System.out.println("(6) Úiüht, úiü wx ùxì ív? => " + desxifraRotX("Úiüht, úiü wx ùxì ív?", 6));
-        
-        System.out.println();
-
-        System.out.println("Missatge xifrat");
-        System.out.println("--------------------");
-        forcaBrutaRotX("Úiüht, úiü wx ùxì ív?");
-    }
+    } 
 }
