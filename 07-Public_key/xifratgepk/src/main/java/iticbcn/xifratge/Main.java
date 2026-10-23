@@ -9,7 +9,7 @@ public class Main {
 
         ClauPublica cp = new ClauPublica();
 
-        String msg = "Missatge de prova per xifrar àéíóú àèìòù aëlöü";
+        String msg = "Missatge de prova per xifrar áéíóú àèìòù äëlöü";
 
         KeyPair parellClaus = cp.generaParellClausRSA();
 
